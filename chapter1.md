@@ -554,6 +554,15 @@ x <- mean(1:3)
 
 *** =sct
 ```{r}
+# Don't know how to check for errors in code, and yet somehow allow student to type nonsense after the solution
+# Currently fails the lksjdfsjf test
+test_error(incorrect_msg = "error in code")
+test_object("x", undefined_msg = "undefined x")
+test_function(
+  "mean",
+  args = "x",
+  not_called_msg = "did you call mean?"
+)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:f02f67218b
