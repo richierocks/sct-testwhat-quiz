@@ -293,6 +293,24 @@ d$ttl <- d$x + d$y
 
 *** =sct
 ```{r}
+# Want to type test_data_frame("d"), however
+# can't use test_data_frame() since it doesn't give enough 
+# flexibility when overriding err msgs
+
+# Also, check_column() doesn't seem to like being piped to another check_column()
+# so having to repeat the check_object()
+ex() %>%
+  check_object("d", undefined_msg = "`d` is undefined") %>%
+  check_column("ttl", col_missing_msg = "missing col `ttl`") %>%
+  check_equal(incorrect_msg = "bad value for `ttl`")
+ex() %>%
+  check_object("d", undefined_msg = "`d` is undefined") %>%
+  check_column("x", col_missing_msg = "missing col `x`") %>%
+  check_equal(incorrect_msg = "bad value for `x`")
+ex() %>%
+  check_object("d", undefined_msg = "`d` is undefined") %>%
+  check_column("y", col_missing_msg = "missing col `y`") %>%
+  check_equal(incorrect_msg = "bad value for `y`")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:631d01c691
