@@ -77,6 +77,11 @@ print(x)
 
 *** =sct
 ```{r}
+test_object("x")
+test_output_contains(
+  "print(x)",
+  incorrect_msg = "Expected same output as `zoo(1:3)`"
+)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:86f183628a
