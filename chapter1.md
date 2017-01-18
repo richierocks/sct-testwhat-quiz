@@ -233,13 +233,13 @@ test_for_loop(
       if_cond_test = {
         bad_if_cond_msg <- "bad if cond"
         # Match > 1 or < 1 with optional space, and maybe integer (1L)
-        test_student_typed("(?:> *1|1L? *<)", not_typed_msg = bad_if_cond_msg, fixed = FALSE)
+        test_student_typed("(?:> *1 *$|1L? *<)", not_typed_msg = bad_if_cond_msg, fixed = FALSE)
       },
       if_expr_test = {
         # Answer should just be the variable name in the condition, but I don't
         # know how to match this variable name to the one in the condition block
         # Regex is a very rough approximation to a valid R variable name
-        test_student_typed("[a-zA-Z.]+[a-zA-Z0-9._]+")
+        test_student_typed("[a-zA-Z.]+[a-zA-Z0-9._]*", fixed = FALSE)
       },
       else_expr_test = {
         # Match 0 or 0L or 0.0000 but not 0.00000001
