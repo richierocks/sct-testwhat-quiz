@@ -150,15 +150,15 @@ f("b")
 # Generated with rebus
 # "f" %R% 
 #   OPEN_PAREN %R% 
-#   space(0, Inf) %R% 
+#   zero_or_more(" ") %R% 
 #   "['\"]" %R% 
 #   "b" %R% 
-#   optional("lue") %R% 
+#   optional(group("lue")) %R% 
 #   "['\"]" %R% 
-#   space(0, Inf) %R% 
+#   zero_or_more(" ") %R% 
 #   CLOSE_PAREN %>%
 #   print(encode_string = TRUE)
-rx <- "f\\([[:space:]]*['\"]b[lue]?['\"][[:space:]]*\\)"
+rx <- "f\\( *['\"]b(?:lue)?['\"] *\\)"
 
 # Ignoring typo in "should cal f('blue') or f('b')", and editing msg to make code in markdown
 ex() %>% check_code(rx, missing_msg = "should call `f('blue')` or `f('b')`")
