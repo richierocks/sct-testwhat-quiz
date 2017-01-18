@@ -143,7 +143,19 @@ f("b")
 *** =sct
 ```{r}
 # Use only a check_code SCT
-
+# Generated with rebus
+# "f" %R% 
+#   OPEN_PAREN %R% 
+#   space(0, Inf) %R% 
+#   "['\"]" %R% 
+#   "b" %R% 
+#   optional("lue") %R% 
+#   "['\"]" %R% 
+#   space(0, Inf) %R% 
+#   CLOSE_PAREN %>%
+#   print(encode_string = TRUE)
+rx <- "f\\([[:space:]]*['\"]b[lue]?['\"][[:space:]]*\\)"
+ex() %>% check_code(rx, missing_msg = "should call `f('blue')` or `f('b')`")
 
 ```
 
