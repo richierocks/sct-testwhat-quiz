@@ -155,6 +155,8 @@ f("b")
 #   CLOSE_PAREN %>%
 #   print(encode_string = TRUE)
 rx <- "f\\([[:space:]]*['\"]b[lue]?['\"][[:space:]]*\\)"
+
+# Ignoring typo in "should cal f('blue') or f('b')", and editing msg to make code in markdown
 ex() %>% check_code(rx, missing_msg = "should call `f('blue')` or `f('b')`")
 
 ```
@@ -209,6 +211,41 @@ for (ii in 1:10) if (ii > 1) ii else 0
 
 *** =sct
 ```{r}
+test_for_loop(
+  cond_test = {
+    # This follows the pattern in example(test_control)
+    # It will still fail, for, e.g., for(1:10 in ii)
+    # Ideally I want to examine 
+    # quote(for (jj in 1:10) if (jj > 1) jj else 0) %>% as.list()
+    # But don't know how to do this
+    bad_for_cond_msg <- "bad cond test"
+    test_student_typed("in", not_typed_msg = bad_for_cond_msg)
+    test_student_typed("1", not_typed_msg = bad_for_cond_msg)
+    test_student_typed("10", not_typed_msg = bad_for_cond_msg)
+  },
+  expr_test = {
+    test_if_else(
+      1,
+      if_cond_test = {
+        bad_if_cond_msg <- "bad if cond"
+        # Match > 1 or < 1 with optional space, and maybe integer (1L)
+        test_student_typed("(?:> *1|1L? *<)", not_typed_msg = bad_if_cond_msg, fixed = FALSE)
+      },
+      if_expr_test = {
+        # Answer should just be the variable name in the condition, but I don't
+        # know how to match this variable name to the one in the condition block
+        # Regex is a very rough approximation to a valid R variable name
+        test_student_typed("[a-zA-Z.]+[a-zA-Z0-9._]+")
+      },
+      else_expr_test = {
+        # Match 0 or 0L or 0.0000 but not 0.00000001
+        test_student_typed("0(L|(?:\\.0+))? *$", fixed = FALSE)
+      },
+      not_found_msg = "no inner if",
+      missing_else_msg = "no else cond"
+    )
+  }
+)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:72a629a74f
