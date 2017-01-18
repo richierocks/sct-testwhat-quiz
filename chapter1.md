@@ -361,6 +361,41 @@ f <- function(a, b, c=1) sum(a + b, c)
 
 *** =sct
 ```{r}
+test_object("f", eval = FALSE)
+
+# Check three args
+# This is probably superfluous, since test_function_definition has 
+# incorrect_number_arguments_msg arg, but I want this test before the one of
+# formal arg defaults
+test_expression_result(
+  "length(formalArgs(f))",
+  incorrect_msg = "`f` should have 3 arguments; are you missing the 3rd arg?"
+)
+
+# Check args have correct defaults; don't care what they are named
+test_expression_result(
+  "unname(formals(f))",
+  incorrect_msg = "The formal arguments of `f` are not correct"
+)
+
+test_function_definition(
+  "f",
+  function_test = {
+    # Do it add up OK?
+    test_expression_result("f(1.2345, -999.99)")
+    # Should probably test it works with complex inputs too
+    test_expression_result("f(55354 + 6236i, 967896, -12342453245)")
+    # Need to test a vector where + will recycle, in order to distinguish
+    # from a simple sum(a, b, c)
+    test_expression_result("f(1:4, 1:2)")
+  },
+  body_test = {
+    # Is + called?
+    test_student_typed("+", incorrect_msg = "no + operator")
+    # Is sum called?
+    test_student_typed("sum(", incorrect_msg = "no sum call")
+  }
+)
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1 key:7839a0890c
