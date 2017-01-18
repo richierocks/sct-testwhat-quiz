@@ -430,6 +430,18 @@ lm(x ~ y, data=d)
 
 *** =sct
 ```{r}
+# Test that lm() is called, but don't evaluate args, since there are different ways of specifying them
+test_function(
+  "lm",
+  args = "formula", # don't enforce use of data arg
+  eval = NA
+)
+# Can't use test_output_contains("lm(x ~ y, data=d)") either
+# since lm prints the function call, which may vary
+ex() %>% check_output("Call:", fixed = TRUE)
+ex() %>% check_output("Coefficients:", fixed = TRUE)
+ex() %>% check_output("\\(Intercept\\) +(?:d\\$)?y")
+ex() %>% check_output("-10 +1")
 ```
 
 
