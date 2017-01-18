@@ -77,7 +77,11 @@ print(x)
 
 *** =sct
 ```{r}
-test_object("x")
+test_object(
+  "x",
+  undefined_msg = "x is undefined",
+  incorrect_msg = "x is not correct"
+)
 test_output_contains(
   "print(x)",
   incorrect_msg = "Expected same output as `zoo(1:3)`"
