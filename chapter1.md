@@ -572,7 +572,7 @@ Use a testwhat function in the pre\_exercise\_code, to allow the solution to pas
 
 *** =pre_exercise_code
 ```{r}
-
+allow_solution_error()
 ```
 
 *** =sample_code
