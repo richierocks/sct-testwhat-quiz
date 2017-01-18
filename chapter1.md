@@ -395,9 +395,9 @@ test_function_definition(
   },
   body_test = {
     # Is + called?
-    test_student_typed("+", incorrect_msg = "no + operator")
+    test_student_typed("+", not_typed_msg = "no + operator")
     # Is sum called?
-    test_student_typed("sum(", incorrect_msg = "no sum call")
+    test_student_typed("sum(", not_typed_msg = "no sum call")
   }
 )
 ```
