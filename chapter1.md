@@ -490,6 +490,20 @@ lapply(df, sum)
 
 *** =sct
 ```{r}
+test_function(
+  "lapply",
+  args = c("X", "FUN"),
+  eval = c(TRUE, NA),
+  args_not_specified_msg = c(
+    "missing first pos arg",
+    "missing second pos arg"
+  ),
+  incorrect_msg = c(
+    "incorrect first pos arg",
+    "incorrect second pos arg"
+  )
+)
+test_output_contains("lapply(df, sum)")
 ```
 --- type:NormalExercise lang:r xp:100 skills:1 key:2564475b6e
 ## Logic Test
